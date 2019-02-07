@@ -1,0 +1,141 @@
+
+insert into books values(1,'Junior Level Books Introduction to Compute','Amit Garg','Readers Zone',7,null);
+insert into books values(2,'Publish News Letter','Amit Garg','MCA Department, MIET Meerut',5,null);
+insert into books values(3,'Client Server Computing','Lalit Kumar','Sun India Publications,New Delhi',4,null);
+insert into books values(4,'Mobile Computing','Vinay Kumar Singhal',' K Nath and Sons, Meerut',6,null);
+insert into books values(5,'Data Structure Using C','Sharad Kumar Verma','Thakur Publications Lucknow',6,null);
+insert into books values(6,'Client Server Computing','Sharad Kumar Verma','Sun India Publications, New Delhi',6,null);
+insert into books values(7,'Computer Networks','Sharad Kumar Verma','Sun India Publications, New Delhi',7,null);
+insert into books values(8,'.NET Framework and C#','Sharad Kumar Verma','Sun India Publications, New Delhi',4,null);
+insert into books values(9,'CBOT ','Gunjan Verma','Thakur Publications ',4,null);
+insert into books values(10,'Absalom, Absalom ','William Faulkner','2 Samuel 19:4',4,null);
+insert into books values(11,'After Many a Summer Dies the Swan	','Aldous Huxley','Tithonus, Alfred, Lord Tennyson',3,null);
+insert into books values(12,'Arms and the Man','George Bernard Shaw','The Aeneid, Virgil',8,null);
+insert into books values(13,'Blue Remembered Earth','Alastair Reynolds','A Shropshire Lad, Poem XL, A.E. Housman',8,null);
+insert into books values(14,'Butter In a Lordly Dish','Agatha Christie	','Judges 5:25',8,null);
+insert into books values(15,'The Cricket on the Hearth','Charles Dickens','Il Penseroso, John Milton',9,null);
+
+------insertion carolin
+
+insert into Books values(16,'The Art of Computer Programming','Donald Knuth','Addison Wesley',2,null);
+insert into Books values(17,'Evolutionary Biology','Dr.Eli C.Minkoff','Addison Wesley',1,null);
+insert into Books values(18,'Programming Pearls','Jon Bentley','Addison Wesley',10,null);
+insert into Books values(19,'Theory Z','William G.Ouchi','Addison Wesley',11,null);
+insert into Books values(20,'Hacker`s Delight','Henry S.Warren Jr.','Addison Wesley',15,null);
+insert into Books values(21,'Quantitative Aptitude','R.S.Aggarwal','S.Chand',2,null);
+insert into Books values(22,'Verbal and Non-Verbal Reasoning','R.S.Aggarwal','S.Chand',3,null);
+insert into Books values(23,'Engineering Physics','Malik and Singh','Tata McGraw Hill',5,null);
+insert into Books values(24,'Engineering Chemistry','Baskar','Wiley',4,null);
+insert into Books values(25,'Optics','AjoyGhatak','TMH',3,null);
+insert into Books values(26,'Mechanics','Mathur','S.Chand',8,null);
+insert into Books values(27,'Applied Chemistry','Sunita Rattan','Kataria',5,null);
+insert into Books values(28,'Basic Electronics','Sanitram Kal','Printice Hall',14,null);
+insert into Books values(29,'Engineering Mechanics','Sharma','Pearson',9,null);
+insert into Books values(30,'Microprocessors','Ramesh Gaonkar','Penram Publications',6,null);
+
+--insertion vipul
+
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (31,'Opening Spaces: An Anthology of Contemporary African Women`s Writing','Yvonne Vera','Wiley',3);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (32,'The Caine Prize for African Writing 2010: 11th Annual Collection','The Caine ','Oxford University Press',2);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (33,'African Folktales','Roger D. Abrahams ',' McGill-Queen’s University Press',4);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (34,'Unchained Voices: An Anthology of Black Authors in the English-Speaking World of the Eighteenth Century','Vincent Carretta',' Penguin Group Canada',5);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (35,'Women Writing Africa: West Africa and the Sahel','Esi Sutherland-Addy',' Penguin Group Canada',2);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (36,'10 Years of the Caine Prize for African Writing: Plus Coetzee, Gordimer, Achebe, Okri','The Caine ',' Encyclopedia of media violence',3);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (37,'Introduction to African Oral Literature and Performance','Bayo Ogunjimi',' Pearson',3);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (38,'Love Child','Gcina Mhlophe',' Reed Elsevier',1);
+
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (39,'Traditions in World Literature: Literature of Africa, Softcover Student Edition','Gcina Mhlophe','McGraw-Hill',2);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (40,'Jambula Tree and other stories: The Caine Prize for African Writing 8th Annual Collection','Monica Arac de Nyeko','Wolters Kluwer',4);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (41,'Up the Down Escalator','Linda Rode','ThomsonReuters	',1);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (42,'How God Fix Jonah','Lorenz Graham','Reed Elsevier',6);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (43,'Glass Jars among Trees','Gcina Mhlophe','Pearson',3);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (44,'Among the Blacks','Lorenz Graham','Pearson',2);
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (45,'Of Suffocated Hearts And Tortured Souls','Valerie Key Orlando','Reed Elsevier',4);
+
+INSERT INTO Books (book_Id,book_Name,author,publication,copies_Available)
+VALUES (46,'The Oxford Book of American Short Stories','Joyce Carol Oates','McGraw-Hill',1);
+
+--book_location insertion pavitra
+insert into book_location values(1,5,2,15);
+insert into book_location values(2,3,1,3);
+insert into book_location values(2,3,1,6);
+insert into book_location values(2,3,3,1);
+insert into book_location values(2,3,1,4);
+insert into book_location values(2,3,1,5);
+insert into book_location values(2,2,1,7);
+insert into book_location values(2,2,1,8);
+insert into book_location values(1,3,3,9);
+insert into book_location values(1,6,2,11);
+insert into book_location values(1,6,3,12);
+insert into book_location values(1,7,2,14);
+insert into book_location values(1,7,2,13);
+insert into book_location values(1,8,3,15);
+insert into book_location values(1,8,1,10);
+insert into book_location values(1,5,1,2);
+
+insert into Book_Location values(1,5,3,16);
+insert into Book_Location values(1,4,2,17);
+insert into Book_Location values(2,2,2,18);
+insert into Book_Location values(2,3,2,19);
+insert into Book_Location values(1,4,2,20);
+insert into Book_Location values(2,5,2,21);
+insert into Book_Location values(2,7,2,22);
+insert into Book_Location values(1,9,2,23);
+insert into Book_Location values(2,5,2,24);
+insert into Book_Location values(1,5,4,25);
+insert into Book_Location values(2,5,3,26);
+insert into Book_Location values(1,4,2,24);
+insert into Book_Location values(1,4,6,27);
+insert into Book_Location values(2,4,4,28);
+insert into Book_Location values(2,5,4,29);
+insert into Book_Location values(3,4,4,30);
+
+--members pavitra
+alter table members drop  constraint Members_password_ck;
+insert into members (member_id,first_name,password,mobile,address,book_issued) values(100,'pavithra','pavithra123',9980354862,'yalahanka bangalore',2);
+insert into members values(101,'carolin','james','carolin123',9964522166,'hinjewadi pune',3);
+insert into members values(102,'vipul','sinha','vipul123',9977664401,'hinjewadi pune',0);
+
+--carolin members insertion
+insert into Members values(200,'Jon','Paul','Jon453',9875623412,'hinjewadi pune',1);
+insert into Members values(201,'Priya','Gupta','priya213',9234625612,'hinjewadi pune',2);
+insert into Members values(202,'Ramesh','Sharma','ram863',9987455623,'hinjewadi pune ',3);
+insert into Members values(203,'Saurabh','Singh','saur342',9265458123,'hinjewadi pune ',0);
+insert into Members values(204,'Sameer','Singh','sam42',9123458123,'hinjewadi pune ',1);
+insert into Members values(205,'Pooja','Sapali','poj22',9967552443,'hinjewadi pune ',2);
+insert into Members values(206,'Sharda','pawar','sha67',9765458763,'hinjewadi pune ',2);
+insert into Members values(207,'Vivek','Singh','viv12',9678956783,'hinjewadi pune ',3);
+insert into Members values(208,'Paurnia','Mehere','paur45',9567856783,'hinjewadi pune ',2);
+insert into Members values(209,'Akshay','Kumar','aksh25',9567854533,'hinjewadi pune ',1);
+insert into Members values(210,'Noman','Imtiaaz','nom15',9346654773,'hinjewadi pune ',2);
+insert into Members values(211,'Vipul','Sinha','vip10',9344455761,'hinjewadi pune ',2);
+insert into Members values(212,'Pawan','Yadav','paw10',9567853421,'hinjewadi pune ',1);
+insert into Members values(213,'Aishwarya','Shanker','ais19',9965853127,'Kochi kerala ',1);
+insert into Members values(214,'Aparna','Krishna','apar60',9856853451,'Kochi Kerala',2);
+
+--pavitra librarian
+alter table librarian drop constraint Librarian_password_ck;
+insert into librarian values('vipul@123','vipul','vipul123');
+--pavitra book_issue
+insert into book_issue values(1111,101,11,'12-may-2018','26-may-2018','25-may-2018');
+insert into book_issue values(1112,101,13,'12-may-2018','26-may-2018','26-may-2018');
+insert into book_issue values(1113,101,15,'12-may-2018','26-may-2018','20-may-2018');
+insert into book_issue values(1114,100,15,'12-june-2018','26-june-2018','19-may-2018');
+insert into book_issue values(1115,100,9,'15-june-2018','29-june-2018','29-may-2018');
+
+update members set book_issued=0;

@@ -1,0 +1,18 @@
+Members Package-
+1) member.viewIssuedBook(member_id) (Done)
+2) member.viewHistory(member_id) (Done)
+3) member.viewPopularBook (Done)
+4) member.changePassword(newPassword, confirmPassword, member_id) (Done)
+
+Library Package-
+1) library.addNewMember(first_name,last_name,password,mobile,address) (Done)
+2) library.addBooks(book_name,author,publication,copies_Available) (Done)
+3) library.bookIssues(member_id, book_id)
+4) library.returnBooks(member_id, book_id)
+5) library.searchMemberById(member_id) (Done)
+6) library.searchMemberByName(First Name or Last Name) (Done)
+7) library.searchBookLocation(book_name)
+8) library.addBookLocations(floor_no,cupboard_no,rack_no,book_id) (Done)
+9) library.deleteBookLocations(floor_no,cupboard_no,rack_no,book_id) (Done)
+10) library. viewIssueBookRecord(book_id) (Done)
+11) library.searchByBookId(book_id) (Done) 

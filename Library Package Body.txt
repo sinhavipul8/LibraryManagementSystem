@@ -1,0 +1,159 @@
+CREATE OR REPLACE PACKAGE BODY library
+IS
+  PROCEDURE searchBooklocation(bookname Books.book_name%TYPE)
+  IS
+    CURSOR cur_searchBook
+    IS
+    SELECT b.book_id,book_name,author,publication,floor_no,cupboard_no,rack_no
+    FROM books b, book_location bl
+    WHERE book_name LIKE '%'||bookname||'%'
+    AND b.book_id = bl.book_id;
+    BEGIN
+
+      FOR book_rec IN cur_searchBook
+      LOOP
+        EXIT WHEN cur_searchBook %NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(book_rec.book_id||' '||book_rec.book_name||' '||book_rec.author||' '||book_rec.publication||' '||book_rec.floor_no||' '||book_rec.cupboard_no||' '||book_rec.rack_no);
+      END LOOP;
+  END searchBookLocation;
+
+  --SEARCH BY ID
+
+
+  PROCEDURE searchBybookId(bookid books.book_id%type)
+  IS
+    CURSOR cur_searchBook
+    IS
+    SELECT book_name,author,publication,floor_no,cupboard_no,rack_no
+    FROM books b, book_location bl
+    WHERE b.book_id = bl.book_id AND b.book_id=bookid;
+    TYPE rec_book_id IS RECORD(
+    bname books.book_name%type,
+    author books.author%type,
+    publication books.publication%type,
+    floorno book_location.floor_no%type,
+    cupno book_location.cupboard_no%type,
+    rackno book_location.rack_no%type);
+    v_rec_book_id rec_book_id;
+  BEGIN
+      OPEN cur_searchBook;
+      FETCH cur_searchBook INTO v_rec_book_id;
+      DBMS_OUTPUT.PUT_LINE(bookid||' '||v_rec_book_id.bname||' '||v_rec_book_id.author||' '||v_rec_book_id.publication||' '||v_rec_book_id.floorno||' '||v_rec_book_id.cupno||' '||v_rec_book_id.rackno);
+      CLOSE cur_searchBook;
+  END searchBybookId;
+
+  PROCEDURE addBookLocations(floorno book_location.floor_no%TYPE, cupno book_location.cupboard_no%TYPE,rackno book_location.rack_no%TYPE, BOOKID books.book_id%TYPE)
+  IS
+  BEGIN
+    INSERT INTO book_location VALUES(floorno,cupno,rackno,bookid);
+    EXCEPTION
+      WHEN DUP_VAL_ON_INDEX THEN
+        DBMS_OUTPUT.PUT_LINE('This book is already present at this location. Please enter a different location.');
+
+  END addBookLocations;
+
+  PROCEDURE addBooks(v_Book_Name Books.book_Name %TYPE,
+  v_Author Books.author %TYPE,
+  v_Publication Books.publication %TYPE,
+  v_Copies_Available Books.copies_Available %TYPE)
+  IS
+  BEGIN
+    INSERT INTO Books ( book_name, author, publication, copies_Available,demand)
+    VALUES (v_Book_name,v_Author,v_Publication,v_Copies_Available,null);
+
+  END addBooks;
+
+  PROCEDURE addNewMember(v_first_Name Members.first_Name %TYPE,
+  v_last_Name Members.last_Name %TYPE,
+  v_password Members.password%TYPE,
+  v_mobile Members.mobile %TYPE,
+  v_address Members.address %TYPE
+  )
+  IS
+  BEGIN
+    INSERT INTO Members(first_Name,last_Name,password,mobile,address)
+    VALUES (v_first_name,v_last_name,v_password,v_mobile,v_address);
+  END addNewMember;
+
+  PROCEDURE bookIssues(mem_id members.member_id%TYPE,
+  bookid books.book_id%TYPE)
+  IS
+  BEGIN
+  INSERT INTO book_issue(member_id,book_id,issue_date) VALUES(mem_id,bookid,sysdate);
+  EXCEPTION
+    WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Maximum number of books issued by Member. Can`t issue book.');
+  END bookIssues;
+
+  PROCEDURE deleteBookLocations(floorno book_location.floor_no%TYPE, cupno book_location.cupboard_no%TYPE,rackno book_location.rack_no%TYPE, BOOKID books.book_id%TYPE)
+  IS
+  BEGIN
+  DELETE FROM book_location where book_id=bookid and floor_no=floorno and cupboard_no=cupno and rack_no=rackno;
+  END deleteBookLocations;
+
+  PROCEDURE returnBooks(mem_id members.member_id%TYPE,bookid books.book_id%TYPE)
+  IS
+  issueid book_issue.issue_id%type;
+  BEGIN
+    SELECT issue_id
+    INTO issueid
+    FROM book_issue
+    WHERE member_id=mem_id AND book_id=bookid AND return_date IS NULL;
+
+    UPDATE book_issue
+    SET return_date =sysdate
+    WHERE issue_id = issueid;
+  END returnBooks;
+
+  PROCEDURE searchMemberById(mem_id members.member_id%TYPE)
+  IS
+    TYPE rec_mem_id IS RECORD (
+    v_member_id members.member_id%TYPE,
+    v_first_name members.first_name%TYPE,
+    v_last_name members.last_name%TYPE,
+    v_mobile members.mobile%TYPE,
+    v_book_issued members.book_issued%TYPE
+    );
+
+    var_rec_mem_id rec_mem_id;
+
+    CURSOR cur_mem_id IS
+    SELECT member_id,first_name,last_name,mobile,book_issued
+    FROM members
+    WHERE member_id=mem_id;
+    BEGIN
+      OPEN cur_mem_id;
+      FETCH cur_mem_id INTO var_rec_mem_id;
+      DBMS_OUTPUT.PUT_LINE(var_rec_mem_id.v_member_id||' '||var_rec_mem_id.v_first_name||' '||var_rec_mem_id.v_last_name||' '||var_rec_mem_id.v_mobile||' '||var_rec_mem_id.v_book_issued);
+      CLOSE cur_mem_id;
+    END searchMemberById;
+
+
+  PROCEDURE searchMemberByName(mem_name VARCHAR2)
+  IS
+  CURSOR cur_mem_name IS
+  SELECT member_id,first_name,last_name,mobile,book_issued
+  FROM members
+  WHERE upper(first_name) LIKE '%'||UPPER(mem_name)||'%' OR UPPER(last_name) LIKE '%'||UPPER(mem_name)||'%';
+  BEGIN
+    FOR mem_rec IN cur_mem_name
+      LOOP
+        EXIT WHEN cur_mem_name %NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(mem_rec.member_id||' '||mem_rec.first_name||' '||mem_rec.last_name||' '||mem_rec.mobile||' '||mem_rec.book_issued);
+      END LOOP;
+  END searchMemberByName;
+
+  PROCEDURE viewIssueBookRecord(bookid books.book_id%TYPE)
+  IS
+    CURSOR cur_rec_issuebybookid(booki books.book_id%TYPE) IS
+    SELECT book_name, bi.member_id, first_name,last_name,exp_return
+    FROM books b, members m, book_issue bi
+    WHERE bi.book_id = booki AND b.book_id = booki AND bi.member_id = m.member_id AND bi.return_date IS NULL;
+    BEGIN
+      FOR  v_issuebybookid IN cur_rec_issuebybookid(bookid)
+        LOOP
+          EXIT WHEN cur_rec_issuebybookid%NOTFOUND;
+          DBMS_OUTPUT.PUT_LINE(v_issuebybookid.book_name||' '||v_issuebybookid.member_id||' '||v_issuebybookid.first_name||' '||v_issuebybookid.last_name||' '||v_issuebybookid.exp_return);
+      END LOOP;
+  END viewIssueBookRecord;
+END library;

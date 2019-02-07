@@ -1,0 +1,104 @@
+CREATE TABLE Books
+
+(
+book_Id NUMBER(10) CONSTRAINT Books_book_Id_pk PRIMARY KEY ,
+
+book_Name VARCHAR(300) NOT NULL,
+
+author VARCHAR(300) NOT NULL,
+
+publication VARCHAR(300) NOT NULL,
+
+copies_Available NUMBER(3) CONSTRAINT Books_copies_Available_ck CHECK(copies_Available >=0),
+
+demand NUMBER(10)
+
+)
+
+
+
+
+CREATE TABLE Book_Location
+
+(
+
+floor_No NUMBER(5) NOT NULL,
+
+cupboard_No NUMBER(5) NOT NULL,
+
+rack_No NUMBER(5) NOT NULL,
+
+book_Id NUMBER(10) CONSTRAINT Book_Location_book_Id_fk REFERENCES Books(book_Id),
+
+CONSTRAINT Book_Location_pk PRIMARY KEY(floor_No,cupboard_No,rack_No,book_Id)
+
+)
+
+
+CREATE TABLE Members
+
+(
+
+member_Id NUMBER(10) CONSTRAINT Members_member_Id PRIMARY KEY,
+
+first_Name VARCHAR(30) NOT NULL,
+
+last_Name VARCHAR(30),
+
+password VARCHAR(50) NOT NULL,
+
+mobile NUMBER(10) NOT NULL CONSTRAINT Members_mobile_uq UNIQUE,
+
+address VARCHAR(100) NOT NULL,
+
+book_Issued NUMBER(2) CONSTRAINT Members_book_Issued_ck CHECK(book_Issued <= 5)
+
+)
+
+
+CREATE TABLE Librarian
+
+(
+
+user_Name VARCHAR(20) CONSTRAINT Librarian_user_Name_pk PRIMARY KEY,
+
+name VARCHAR(20) NOT NULL,
+
+password VARCHAR(50)
+
+)
+desc librarian
+CREATE TABLE Book_Issue
+
+(
+
+issue_Id NUMBER(10) CONSTRAINT Book_Issue_issue_Id_pk PRIMARY KEY,
+
+member_Id NUMBER(10) CONSTRAINT Book_Issue_member_Id_fk REFERENCES Members(member_Id),
+
+book_Id NUMBER(10) CONSTRAINT Book_Issue_book_Id_fk REFERENCES Books(book_Id),
+
+issue_Date DATE NOT NULL,
+
+exp_Return DATE NOT NULL,
+
+return_Date DATE
+)
+
+
+
+CREATE TABLE Receipt
+
+(
+
+receipt_Id NUMBER(10) CONSTRAINT Receipt_issue_Id_pk PRIMARY KEY,
+
+issue_Id NUMBER(10) CONSTRAINT Receipt_issue_Id_fk REFERENCES Book_Issue(issue_Id),
+
+book_Id NUMBER(10) CONSTRAINT Receipt_book_Id_fk REFERENCES Books(book_Id),
+
+member_Id NUMBER(10) CONSTRAINT Receipt_member_Id REFERENCES Members(member_Id),
+
+fine NUMBER(5) NOT NULL
+
+)

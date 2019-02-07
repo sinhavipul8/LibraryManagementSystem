@@ -1,0 +1,9 @@
+
+--Member Package Creation
+CREATE OR REPLACE PACKAGE member
+IS
+PROCEDURE viewIssuedBook(member_no book_issue.member_id%TYPE) ;
+PROCEDURE viewHistory(member_no book_issue.member_id%TYPE) ;
+PROCEDURE viewPopularBook;
+PROCEDURE changePassword(newPassword members.password%TYPE, confirmPassword members.password%TYPE, memberid members.member_id%TYPE);
+END member;

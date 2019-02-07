@@ -1,0 +1,77 @@
+CREATE OR REPLACE PACKAGE BODY member
+IS
+  PROCEDURE changePassword(newPassword members.password%TYPE, confirmPassword members.password%TYPE, memberid members.member_id%TYPE)
+  IS
+  BEGIN
+    IF(newPassword = confirmPassword) THEN
+      UPDATE members
+      SET password = newPassword
+      WHERE member_id = memberid;
+    ELSE
+      DBMS_OUTPUT.PUT_LINE('Password not matching. Please try again.');
+    END IF;
+  END changePassword;
+
+  --Procedure for viewing the history of books issued by a member
+  PROCEDURE viewHistory(member_no book_issue.member_id%TYPE)
+  IS
+    CURSOR cur_member(mem_id number)
+    IS
+    SELECT b.book_name,bi.issue_date,bi.return_date
+    FROM book_issue bi,books b
+    WHERE bi.book_id=b.book_id AND bi.member_id=mem_id AND return_date IS NOT NULL;
+    BEGIN
+      FOR mem_record IN cur_member(member_no)
+      LOOP
+        EXIT WHEN cur_member%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(mem_record.book_name||' '||mem_record.issue_date||' '||mem_record.return_date);
+      END LOOP;
+
+    END viewHistory;
+
+    --Procedure for viewing the books currently Issued by a member
+    PROCEDURE viewIssuedBook(member_no book_issue.member_id%TYPE)
+    IS
+    CURSOR cur_member(mem_id number)
+    IS
+    SELECT b.book_name,bi.issue_date,bi.exp_return
+    FROM book_issue bi,books b
+    WHERE bi.book_id=b.book_id AND bi.member_id=mem_id AND return_date IS NULL;
+    BEGIN
+        FOR mem_record IN cur_member(member_no)
+        LOOP
+          EXIT WHEN cur_member%NOTFOUND;
+          DBMS_OUTPUT.PUT_LINE(mem_record.book_name||' '||mem_record.issue_date||' '||mem_record.exp_return);
+        END LOOP;
+
+    END viewIssuedBook;
+
+    --Procedure for viewing the most popular books in the library
+  PROCEDURE viewPopularBook
+  IS
+    CURSOR cur_popBook
+    IS
+    SELECT book_name,author,publication
+    FROM books
+    WHERE demand IS NOT NULL AND ROWNUM <= 20
+    ORDER BY demand DESC, book_name ASC ;
+
+    TYPE rec_book IS RECORD(
+    book_name books.book_name%TYPE,
+    author books.author%TYPE,
+    publication books.publication%TYPE);
+
+    var_rec_book rec_book;
+    BEGIN
+      OPEN cur_popBook;
+      LOOP
+        FETCH cur_popBook INTO var_rec_book;
+
+        EXIT WHEN cur_popBook%notfound;
+
+        DBMS_OUTPUT.PUT_LINE(var_rec_book.book_name||'  '||var_rec_book.author||'  '||var_rec_book.publication);
+      END LOOP;
+      CLOSE cur_popBook;
+    END viewPopularBook;
+
+END member;

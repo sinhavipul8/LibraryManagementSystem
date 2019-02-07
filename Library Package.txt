@@ -1,0 +1,35 @@
+
+CREATE OR REPLACE PACKAGE library
+IS
+  PROCEDURE addNewMember(v_first_Name Members.first_Name %TYPE,
+  v_last_Name Members.last_Name %TYPE,
+  v_password Members.password%TYPE,
+  v_mobile Members.mobile %TYPE,
+  v_address Members.address %TYPE
+  );
+
+  PROCEDURE addBooks(v_Book_Name Books.book_Name %TYPE,
+  v_Author Books.author %TYPE,
+  v_Publication Books.publication %TYPE,
+  v_Copies_Available Books.copies_Available %TYPE);
+
+  PROCEDURE bookIssues(mem_id members.member_id%TYPE,
+  bookid books.book_id%TYPE);
+
+  PROCEDURE returnBooks (mem_id members.member_id%TYPE,bookid books.book_id%TYPE);
+
+  PROCEDURE searchMemberByName(mem_name VARCHAR2);
+
+  PROCEDURE searchMemberById(mem_id members.member_id%TYPE);
+
+  PROCEDURE searchBooklocation(bookname Books.book_name%TYPE);
+
+  PROCEDURE searchBybookId(bookid books.book_id%type);
+
+  PROCEDURE addBookLocations(floorno book_location.floor_no%TYPE, cupno book_location.cupboard_no%TYPE,rackno book_location.rack_no%TYPE, BOOKID books.book_id%TYPE);
+
+  PROCEDURE deleteBookLocations(floorno book_location.floor_no%TYPE, cupno book_location.cupboard_no%TYPE,rackno book_location.rack_no%TYPE, BOOKID books.book_id%TYPE);
+
+  PROCEDURE viewIssueBookRecord(bookid books.book_id%type);
+
+END library;

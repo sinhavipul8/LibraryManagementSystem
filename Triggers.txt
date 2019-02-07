@@ -1,0 +1,84 @@
+
+CREATE OR REPLACE TRIGGER trigger_member_id
+BEFORE INSERT ON Members
+FOR EACH ROW
+BEGIN
+SELECT MEM_ID.NEXTVAL,0 INTO :NEW.member_Id,:NEW.book_issued FROM DUAL;
+END;
+
+
+
+--return_book trigger
+
+
+create or replace trigger trig_return_books
+after update of return_date
+on book_issue
+for each row
+declare
+fine_cal NUMBER(10);
+begin
+
+update books set copies_available= copies_available + 1 where book_id = :NEW.book_id;
+if :NEW.return_date > :NEW.exp_return then
+fine_cal := abs(:NEW.return_date - :NEW.exp_return) * 5;
+insert into Receipt(issue_id,book_id,member_id,fine) values(:NEW.issue_id,:NEW.book_id,:NEW.member_id, fine_cal);
+end if;
+end;
+/*
+--RECEIPT GENERATION MESSAGE
+CREATE OR REPLACE TRIGGER trig_fine_notification
+AFTER INSERT
+ON Receipt
+--FOR EACH ROW
+DECLARE
+nameOfMember VARCHAR2(50);
+fineImposed NUMBER(10);
+daysLate NUMBER(10);
+bookName VARCHAR2(300);
+BEGIN
+  SELECT first_name, fine, return_date-exp_return, book_name
+  INTO nameOfMember,fineImposed,daysLate, bookName
+  FROM receipt r, book_issue bi, members m, books b
+  WHERE r.member_id = m.member_id and r.book_id = b.book_id and r.issue_id= bi.issue_id;
+  DBMS_OUTPUT.PUT_LINE('A fine of ₹'||fineImposed||' has been imposed on '||nameOfMember||' for delaying return of book '||bookName||' by '||daysLate||' days.');
+END;
+*/
+drop trigger trig_fine_notification
+--receipt id generation
+
+CREATE OR REPLACE TRIGGER tri_receipt_id
+BEFORE INSERT
+ON Receipt
+FOR EACH ROW
+BEGIN
+  SELECT rec_id.NEXTVAL INTO :NEW.receipt_id FROM DUAL;
+END;
+
+--add_book book_id generation
+
+CREATE OR REPLACE TRIGGER trigger_book_id
+BEFORE INSERT ON Books
+FOR EACH ROW
+BEGIN
+SELECT BOOK_ID.NEXTVAL INTO :NEW.book_Id FROM DUAL;
+SELECT 0 INTO :NEW.demand FROM DUAL;
+END;
+
+
+--book_issue- issue_id generation and exp_return date, demand increment and copies available management.
+
+CREATE OR REPLACE TRIGGER trig_book_issue
+BEFORE INSERT
+ON book_issue
+FOR EACH ROW
+BEGIN
+  UPDATE books SET copies_Available = copies_Available-1 WHERE book_id = :NEW.book_id;
+  UPDATE members SET book_issued = book_issued + 1 WHERE member_id = :NEW.member_id;
+  UPDATE books SET demand = demand +1 WHERE book_id = :NEW.book_id;
+  SELECT sq_issue_id.NEXTVAL INTO :NEW.issue_id FROM DUAL;
+  SELECT :NEW.issue_date + 10 INTO :NEW.exp_return FROM DUAL;
+  EXCEPTION
+    WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Maximum number of books issued by Member. Can`t issue book.');
+END;
